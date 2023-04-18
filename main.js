@@ -1,8 +1,11 @@
 import './style.scss'
 import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
+import abc from '/abc.jpg'
+import bg1 from '/bg1.jpg'
 import { setupCounter } from './counter.js'
 import * as THREE from 'three'
+import { ConeGeometry } from 'three'
 class Slider {
   constructor() {
     this.bindAll()
@@ -67,9 +70,9 @@ class Slider {
     this.camera = null
 
     this.images = [
-      'https://s3-us-west-2.amazonaws.com/s.cdpn.io/58281/bg1.jpg',
-      'https://s3-us-west-2.amazonaws.com/s.cdpn.io/58281/bg2.jpg',
-      'https://s3-us-west-2.amazonaws.com/s.cdpn.io/58281/bg3.jpg',
+      bg1,
+      abc,
+      'https://i0.wp.com/seesawvietnam.com/wp-content/uploads/2023/03/z4163137336904_58a387f21353ac3fd2b1e67922d297f8.jpg?w=1280&ssl=1',
     ]
 
     this.data = {
@@ -108,7 +111,7 @@ class Slider {
       const line = bullet.querySelector('.js-slider-bullet__line')
 
       TweenMax.set(txt, {
-        alpha: 0.25,
+        opacity: 0.25,
       })
       TweenMax.set(line, {
         scaleX: 0,
@@ -124,7 +127,7 @@ class Slider {
       this.el.offsetHeight / 2,
       this.el.offsetHeight / -2,
       1,
-      1000,
+      1000
     )
 
     this.camera.lookAt(this.scene.position)
@@ -154,10 +157,7 @@ class Slider {
       texture.generateMipmaps = false
 
       if (index === 0 && this.mat) {
-        this.mat.uniforms.size.value = [
-          texture.image.naturalWidth,
-          texture.image.naturalHeight,
-        ]
+        this.mat.uniforms.size.value = [texture.image.naturalWidth, texture.image.naturalHeight]
       }
 
       this.textures.push(texture)
@@ -165,7 +165,7 @@ class Slider {
 
     this.disp = loader.load(
       'https://s3-us-west-2.amazonaws.com/s.cdpn.io/58281/rock-_disp.png',
-      this.render,
+      this.render
     )
     this.disp.magFilter = this.disp.minFilter = THREE.LinearFilter
     this.disp.wrapS = this.disp.wrapT = THREE.RepeatWrapping
@@ -189,11 +189,7 @@ class Slider {
       fragmentShader: this.frag,
     })
 
-    const geometry = new THREE.PlaneGeometry(
-      this.el.offsetWidth,
-      this.el.offsetHeight,
-      1,
-    )
+    const geometry = new THREE.PlaneGeometry(this.el.offsetWidth, this.el.offsetHeight, 1)
 
     const mesh = new THREE.Mesh(geometry, this.mat)
 
@@ -225,17 +221,11 @@ class Slider {
     const currentBullet = this.bullets[this.data.current]
     const nextBullet = this.bullets[this.data.next]
 
-    const currentBulletTxt = currentBullet.querySelectorAll(
-      '.js-slider-bullet__text',
-    )
+    const currentBulletTxt = currentBullet.querySelectorAll('.js-slider-bullet__text')
     const nextBulletTxt = nextBullet.querySelectorAll('.js-slider-bullet__text')
 
-    const currentBulletLine = currentBullet.querySelectorAll(
-      '.js-slider-bullet__line',
-    )
-    const nextBulletLine = nextBullet.querySelectorAll(
-      '.js-slider-bullet__line',
-    )
+    const currentBulletLine = currentBullet.querySelectorAll('.js-slider-bullet__line')
+    const nextBulletLine = nextBullet.querySelectorAll('.js-slider-bullet__line')
 
     const tl = new TimelineMax({ paused: true })
 
@@ -261,7 +251,7 @@ class Slider {
         scaleY: 1.5,
         ease: Expo.easeInOut,
       },
-      0.075,
+      0.075
     )
       .to(
         currentBulletTxt,
@@ -270,14 +260,14 @@ class Slider {
           alpha: 0.25,
           ease: Linear.easeNone,
         },
-        0,
+        0
       )
       .set(
         currentBulletLine,
         {
           transformOrigin: 'right',
         },
-        0,
+        0
       )
       .to(
         currentBulletLine,
@@ -286,7 +276,7 @@ class Slider {
           scaleX: 0,
           ease: Expo.easeInOut,
         },
-        0,
+        0
       )
 
     if (currentText) {
@@ -300,7 +290,7 @@ class Slider {
           yPercent: -100,
           ease: Power4.easeInOut,
         },
-        0,
+        0
       )
     }
 
@@ -311,7 +301,7 @@ class Slider {
       {
         autoAlpha: 1,
       },
-      1,
+      1
     )
 
     if (nextText) {
@@ -325,7 +315,7 @@ class Slider {
           yPercent: 0,
           ease: Power4.easeOut,
         },
-        1.5,
+        1.5
       )
     }
 
@@ -342,7 +332,7 @@ class Slider {
         ease: Expo.easeInOut,
       },
       0.075,
-      1,
+      1
     )
       .to(
         nextBulletTxt,
@@ -351,14 +341,14 @@ class Slider {
           alpha: 1,
           ease: Linear.easeNone,
         },
-        1,
+        1
       )
       .set(
         nextBulletLine,
         {
           transformOrigin: 'left',
         },
-        1,
+        1
       )
       .to(
         nextBulletLine,
@@ -367,7 +357,7 @@ class Slider {
           scaleX: 1,
           ease: Expo.easeInOut,
         },
-        1,
+        1
       )
 
     tl.play()
@@ -382,10 +372,8 @@ class Slider {
 
     this.transitionNext()
 
-    this.data.current =
-      this.data.current === this.data.total ? 0 : this.data.current + 1
-    this.data.next =
-      this.data.current === this.data.total ? 0 : this.data.current + 1
+    this.data.current = this.data.current === this.data.total ? 0 : this.data.current + 1
+    this.data.next = this.data.current === this.data.total ? 0 : this.data.current + 1
   }
 
   changeTexture() {
